@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un Projet - Gestion de Tâches</title>
+    <link rel="stylesheet" href="css/creation_projet.css">
+</head>
+<body>
+    <header>
+            <div class="container">
+                <h1>Gestion de Tâches</h1>
+                <nav>
+                    <ul class="navbar">
+                        <li><a href="accueil.html">Accueil</a></li>
+                        <li><a href="creation_projet.html">Créer un Projet</a></li>
+                        <li><a href="liste_des_projets.html">Liste des Projets</a></li>
+                        <li><a href="connexion.html">Se connecter</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        
+
+    <main>
+        <section class="create-project">
+            <h2>Créer un Nouveau Projet</h2>
+
+            <!-- Formulaire de création de projet -->
+            <form id="project-form" class="project-form">
+                <label for="project-name">Nom du Projet :</label>
+                <input type="text" id="project-name" placeholder="Entrez le nom du projet" required />
+
+                <label for="project-description">Description :</label>
+                <textarea id="project-description" placeholder="Décrivez votre projet" rows="4" required></textarea>
+
+                <label for="project-deadline">Date Limite :</label>
+                <input type="date" id="project-deadline" required />
+
+                <button type="submit" id="submit-project">Créer le Projet</button>
+            </form>
+
+            <!-- Message de succès ou d'erreur -->
+            <div id="message" class="message"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Gestion de Tâches - Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Fonction de création de projet
+        document.getElementById('project-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Empêche la soumission du formulaire
+
+            const projectName = document.getElementById('project-name').value;
+            const projectDescription = document.getElementById('project-description').value;
+            const projectDeadline = document.getElementById('project-deadline').value;
+
+            // Validation des champs
+            if (!projectName || !projectDescription || !projectDeadline) {
+                displayMessage("Veuillez remplir tous les champs.", "error");
+                return;
+            }
+
+            // Simulation de l'ajout du projet (peut être connecté à une base de données ou une API)
+            displayMessage(`Le projet "${projectName}" a été créé avec succès !`, "success");
+
+            // Réinitialisation du formulaire
+            document.getElementById('project-form').reset();
+        });
+
+        // Fonction pour afficher un message (succès ou erreur)
+        function displayMessage(message, type) {
+            const messageBox = document.getElementById('message');
+            messageBox.textContent = message;
+            messageBox.className = type === 'success' ? 'message-success' : 'message-error';
+        }
+    </script>
+</body>
+</html>

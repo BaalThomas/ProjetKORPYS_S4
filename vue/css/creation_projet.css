@@ -1,0 +1,224 @@
+/* Réinitialisation globale */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Style général du corps de la page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* En-tête de la page */
+/* Styles globaux */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Style du header et de la barre de navigation */
+header {
+    background-color: #007BFF;
+    color: white;
+    padding: 20px 0;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-size: 26px;
+    margin-right: 30px;
+}
+
+nav {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navbar {
+    list-style-type: none;
+    display: flex;
+    gap: 30px;
+}
+
+.navbar li {
+    position: relative;
+}
+
+.navbar li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    text-transform: uppercase;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar li a:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.navbar li a.active {
+    background-color: #0056b3;
+    font-weight: bold;
+    color: #fff;
+}
+
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Section principale */
+main {
+    width: 90%;
+    margin: 20px auto;
+}
+
+/* Section de création de projet */
+.create-project {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre de la section */
+h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+/* Formulaire de création de projet */
+.project-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.project-form label {
+    font-size: 16px;
+    color: #333;
+}
+
+.project-form input,
+.project-form textarea {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.project-form textarea {
+    resize: vertical;
+}
+
+.project-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #28a745; /* Vert pour le bouton */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.project-form button:hover {
+    background-color: #218838; /* Plus foncé au survol */
+}
+
+/* Message de retour (succès ou erreur) */
+.message {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.message-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.message-error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Mise en page responsive */
+@media screen and (max-width: 768px) {
+    .create-project {
+        padding: 15px;
+    }
+
+    .project-form button,
+    .project-form input,
+    .project-form textarea {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    header h1 {
+        font-size: 20px;
+    }
+
+    .create-project {
+        padding: 10px;
+    }
+}

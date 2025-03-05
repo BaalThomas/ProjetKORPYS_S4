@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un Compte</title>
+    <link rel="stylesheet" href="css/creation_compte.css">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Gestion de Tâches</h1>
+            <nav>
+                <ul class="navbar">
+                    <li><a href="accueil.html">Accueil</a></li>
+                    <li><a href="creation_projet.html">Créer un Projet</a></li>
+                    <li><a href="liste_des_projets.html">Liste des Projets</a></li>
+                    <li><a href="connexion.html">Se connecter</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="signup-section">
+            <div class="signup-form-container">
+                <h2>Créer un Compte</h2>
+                <form action="#" method="POST">
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="Entrez votre email">
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" required placeholder="Choisissez un mot de passe">
+                    </div>
+                    <div class="input-group">
+                        <label for="confirm-password">Confirmer le mot de passe</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirmez votre mot de passe">
+                    </div>
+                    <button type="submit" class="btn-signup">S'inscrire</button>
+                </form>
+                <p class="login-link">Vous avez déjà un compte ? <a href="connexion.html">Se connecter</a></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Gestion de Tâches - Tous droits réservés.</p>
+    </footer>
+
+</body>
+</html>

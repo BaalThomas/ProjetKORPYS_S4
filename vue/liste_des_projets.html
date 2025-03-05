@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Projets</title>
+    <link rel="stylesheet" href="css/liste_des_projets.css">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Gestion de Tâches</h1>
+            <nav>
+                <ul class="navbar">
+                    <li><a href="accueil.html">Accueil</a></li>
+                    <li><a href="creation_projet.html">Créer un Projet</a></li>
+                    <li><a href="liste_des_projets.html">Liste des Projets</a></li>
+                    <li><a href="connexion.html">Se connecter</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="projects-list">
+            <div class="projects-header">
+                <h2>Liste des Projets</h2>
+                <button class="btn-add-project" onclick="window.location.href='creation_projet.html'">Créer un Nouveau Projet</button>
+            </div>
+
+            <div class="project-items">
+                <!-- Exemple de projet -->
+                <div class="project-item">
+                    <h3>Nom du Projet 1</h3>
+                    <p>Statut: <span class="status">En cours</span></p>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <button class="btn-view" onclick="viewProject('Projet 1')">Voir le Projet</button>
+                    <button class="btn-delete" onclick="deleteProject('Projet 1')">Supprimer</button>
+                </div>
+
+                <div class="project-item">
+                    <h3>Nom du Projet 2</h3>
+                    <p>Statut: <span class="status">Terminé</span></p>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <button class="btn-view" onclick="viewProject('Projet 2')">Voir le Projet</button>
+                    <button class="btn-delete" onclick="deleteProject('Projet 2')">Supprimer</button>
+                </div>
+
+                <!-- Ajoutez plus de projets ici -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Gestion de Tâches - Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Fonction pour afficher les détails du projet
+        function viewProject(projectName) {
+            alert("Voir les détails de: " + projectName);
+            // Vous pouvez ici rediriger l'utilisateur vers la page de détail du projet
+            // window.location.href = 'project-details.html'; 
+        }
+
+        // Fonction pour supprimer un projet
+        function deleteProject(projectName) {
+            if (confirm("Êtes-vous sûr de vouloir supprimer ce projet ?")) {
+                alert("Le projet '" + projectName + "' a été supprimé.");
+                // Ici vous ajouteriez la logique pour supprimer un projet dans votre base de données
+                // Vous pouvez rafraîchir la page ou mettre à jour dynamiquement la liste des projets
+            }
+        }
+    </script>
+
+</body>
+</html>
