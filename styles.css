@@ -1,19 +1,22 @@
+/* Réinitialisation globale */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Style général du corps de la page */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     color: #333;
 }
 
+/* En-tête de la page */
 header {
     background-color: #007BFF;
     color: white;
-    padding: 10px 0;
+    padding: 15px 0;
 }
 
 .container {
@@ -37,13 +40,20 @@ nav ul {
 nav ul li a {
     color: white;
     text-decoration: none;
+    font-size: 16px;
 }
 
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Section principale */
 main {
     width: 90%;
     margin: 20px auto;
 }
 
+/* Section du calendrier */
 .calendar {
     background-color: white;
     padding: 20px;
@@ -51,16 +61,25 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Titre de la section */
 h2 {
     margin-bottom: 20px;
     font-size: 22px;
 }
 
+/* Informations sur le projet */
+.project-info {
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Navigation pour changer de semaine */
 .week-navigation {
     display: flex;
     justify-content: space-between;
+    gap: 10px;
     margin-bottom: 20px;
-    gap: 20px;
 }
 
 .week-navigation button {
@@ -78,15 +97,17 @@ h2 {
     background-color: #0056b3;
 }
 
+/* Section pour ajouter/modifier/supprimer les tâches */
 .edit-task {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
     margin-bottom: 20px;
 }
 
 .edit-task button {
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #ffc107;
     color: white;
     border: none;
     border-radius: 5px;
@@ -94,14 +115,62 @@ h2 {
     transition: background-color 0.3s;
 }
 
-.edit-task button:hover {
-    background-color: #e0a800;
+.edit-task .css_ajoutClass {
+    background-color: #28a745; /* Vert pour Ajouter */
 }
 
+.edit-task .css_modifClass {
+    background-color: #ffc107; /* Jaune pour Modifier */
+}
+
+.edit-task .css_supprClass {
+    background-color: #dc3545; /* Rouge pour Supprimer */
+}
+
+.edit-task button:hover {
+    opacity: 0.8;
+}
+
+/* Formulaire d'ajout de tâche */
+.task-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.task-form input,
+.task-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.task-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.task-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Grille du calendrier */
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 20px;
+    gap: 15px;
+    margin-top: 20px;
 }
 
 .calendar-day {
@@ -109,6 +178,7 @@ h2 {
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
 .calendar-day h3 {
@@ -132,7 +202,7 @@ h2 {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Animation mouseover */
+/* Animation sur hover pour les tâches */
 .calendar-day li:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -140,10 +210,11 @@ h2 {
 
 /* Style pour la tâche sélectionnée */
 .selected {
-    border: 2px solid #28a745; /* Bordure verte pour la sélection */
-    background-color: #e0f7e0; /* Fond léger vert */
+    border: 2px solid #28a745;
+    background-color: #e0f7e0;
 }
 
+/* Footer */
 footer {
     text-align: center;
     padding: 10px;
@@ -155,95 +226,48 @@ footer p {
     margin: 0;
 }
 
-/* Ajouter un style pour le formulaire */
-.task-form {
-    margin-top: 20px;
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+/* Mise en page responsive */
+@media screen and (max-width: 768px) {
+    .calendar-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .edit-task {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .task-form button,
+    .edit-task button {
+        width: 100%;
+    }
 }
 
-.task-form input, .task-form select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
+/* Adaptation pour les très petits écrans */
+@media screen and (max-width: 480px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
 
-.task-form button {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
+    header h1 {
+        font-size: 20px;
+    }
 
-.task-form button:hover {
-    background-color: #218838;
-}
+    .calendar-grid {
+        grid-template-columns: 1fr;
+    }
 
-.add-task button {
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
+    .calendar-day h3 {
+        font-size: 14px;
+    }
 
-.add-task button:hover {
-    background-color: #0056b3;
-}
+    .calendar-day li {
+        font-size: 14px;
+    }
 
-/* Style pour le nom du projet */
-.project-info {
-    margin-bottom: 20px;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-/* Style pour le bouton Modifier la Tâche */
-.edit-task button {
-    padding: 10px 20px;
-    background-color: #ffc107;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-}
-
-.edit-task button:hover {
-    background-color: #e0a800;
-}
-/* Style pour les boutons Modifier et Supprimer */
-.edit-task button {
-    padding: 10px 20px;
-    background-color: #ffc107;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-    margin-right: 10px;
-}
-
-.edit-task button:hover {
-    background-color: #e0a800;
-}
-
-.edit-task button:last-child {
-    background-color: #dc3545; /* Bouton rouge pour supprimer */
-}
-
-.edit-task button:last-child:hover {
-    background-color: #c82333; /* Hover rouge foncé */
+    .edit-task button,
+    .task-form button {
+        font-size: 14px;
+    }
 }

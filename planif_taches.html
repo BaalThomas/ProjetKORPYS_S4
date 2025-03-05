@@ -14,7 +14,6 @@
                 <ul>
                     <li><a href="#">Accueil</a></li>
                     <li><a href="#">Créer un Projet</a></li>
-                    <li><a href="#">Voir les Tâches</a></li>
                     <li><a href="#">Notifications</a></li>
                 </ul>
             </nav>
@@ -36,15 +35,12 @@
                 <button onclick="changeWeek(1)">Semaine Suivante</button>
             </div>
 
-            <!-- Bouton pour ajouter une nouvelle tâche -->
-            <div class="add-task">
-                <button onclick="toggleTaskForm()">Ajouter une Nouvelle Tâche</button>
-            </div>
-
+    
             <!-- Boutons pour modifier ou supprimer la tâche sélectionnée -->
             <div class="edit-task">
-                <button onclick="editSelectedTask()">Modifier la Tâche</button>
-                <button onclick="deleteSelectedTask()">Supprimer la Tâche</button>
+                <button onclick="toggleTaskForm()" class="css_ajoutClass">Ajouter une Nouvelle Tâche</button>
+                <button onclick="editSelectedTask()" class= "css_modifClass">Modifier la Tâche</button>
+                <button onclick="deleteSelectedTask()" class = "css_supprClass">Supprimer la Tâche</button>
             </div>
 
             <!-- Formulaire pour ajouter une tâche (caché par défaut) -->
@@ -85,7 +81,7 @@
     <script>
         let currentWeek = 0; // Semaine actuelle (0 = Semaine courante)
         let selectedTask = null; // Variable pour la tâche sélectionnée
-        const projectName = "Gestion de Tâches"; // Nom du projet
+        const projectName = "Projet Test Généré"; // Nom du projet
 
         // Les tâches des semaines (exemple simplifié)
         const tasksForWeeks = [
