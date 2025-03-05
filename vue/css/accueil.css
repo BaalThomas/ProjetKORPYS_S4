@@ -163,6 +163,8 @@ main {
 .team-member {
     text-align: center;
     flex-basis: 45%;
+    max-width: 30%;
+    margin: 5%;
 }
 
 .team-member img {

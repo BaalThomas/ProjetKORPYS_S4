@@ -127,6 +127,7 @@ main {
 
 /* Titre de la section */
 h2 {
+   color: #007BFF;
     margin-bottom: 20px;
     font-size: 22px;
 }
