@@ -13,7 +13,7 @@
             <h1>Gestion de Tâches</h1>
             <nav>
                 <ul class="navbar">
-                    <li><a href="accueil.html">Accueil</a></li>
+                    <li><a href="index.html">Accueil</a></li>
                     <li><a href="creation_projet.html">Créer un Projet</a></li>
                     <li><a href="liste_des_projets.html">Liste des Projets</a></li>
                     <li><a href="connexion.html">Se connecter</a></li>
@@ -56,22 +56,8 @@
         <p>© 2025 Gestion de Tâches - Tous droits réservés.</p>
     </footer>
 
-    <script>
-        // Fonction pour afficher les détails du projet
-        function viewProject(projectName) {
-            alert("Voir les détails de: " + projectName);
-            // Vous pouvez ici rediriger l'utilisateur vers la page de détail du projet
-            // window.location.href = 'project-details.html'; 
-        }
+    <script src="../src/core/services/liste_projet.js">
 
-        // Fonction pour supprimer un projet
-        function deleteProject(projectName) {
-            if (confirm("Êtes-vous sûr de vouloir supprimer ce projet ?")) {
-                alert("Le projet '" + projectName + "' a été supprimé.");
-                // Ici vous ajouteriez la logique pour supprimer un projet dans votre base de données
-                // Vous pouvez rafraîchir la page ou mettre à jour dynamiquement la liste des projets
-            }
-        }
     </script>
 
 </body>

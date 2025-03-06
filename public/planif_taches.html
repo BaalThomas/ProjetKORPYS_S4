@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de Tâches - Calendrier</title>
+    <link rel="stylesheet" href="css/planif_taches.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Gestion de Tâches</h1>
+            <nav>
+                <ul class="navbar">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="creation_projet.html">Créer un Projet</a></li>
+                    <li><a href="liste_des_projets.html">Liste des Projets</a></li>
+                    <li><a href="connexion.html">Se connecter</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+
+    <main>
+        <section class="calendar">
+            <h2>Planification des Tâches</h2>
+
+            <!-- Affichage du nom du projet -->
+            <div class="project-info">
+                <h3>Projet : <span id="project-name">Mon projet</span></h3>
+            </div>
+
+            <!-- Conteneur des boutons de navigation de la semaine -->
+            <div class="week-navigation">
+                <button onclick="changeWeek(-1)">Semaine Précédente</button>
+                <button onclick="changeWeek(1)">Semaine Suivante</button>
+            </div>
+
+    
+            <!-- Boutons pour modifier ou supprimer la tâche sélectionnée -->
+            <div class="edit-task">
+                <button onclick="toggleTaskForm()" class="css_ajoutClass">Ajouter une Nouvelle Tâche</button>
+                <button onclick="editSelectedTask()" class= "css_modifClass">Modifier la Tâche</button>
+                <button onclick="deleteSelectedTask()" class = "css_supprClass">Supprimer la Tâche</button>
+            </div>
+
+            <!-- Formulaire pour ajouter une tâche (caché par défaut) -->
+            <div id="task-form" class="task-form" style="display: none;">
+                <h3>Ajouter une nouvelle tâche</h3>
+                <label for="task-day">Jour:</label>
+                <select id="task-day">
+                    <option value="Lundi">Lundi</option>
+                    <option value="Mardi">Mardi</option>
+                    <option value="Mercredi">Mercredi</option>
+                    <option value="Jeudi">Jeudi</option>
+                    <option value="Vendredi">Vendredi</option>
+                    <option value="Samedi">Samedi</option>
+                    <option value="Dimanche">Dimanche</option>
+                </select>
+
+                <label for="task-description">Description:</label>
+                <input type="text" id="task-description" placeholder="Description de la tâche" />
+
+                <label for="task-duration">Durée (en heures):</label>
+                <input type="number" id="task-duration" placeholder="Durée estimée" min="1" />
+
+                <button onclick="addTask()">Ajouter</button>
+                <button onclick="toggleTaskForm()">Annuler</button>
+            </div>
+
+            <!-- Grille de calendrier -->
+            <div class="calendar-grid" id="calendar-grid">
+                <!-- Les jours de la semaine seront mis à jour dynamiquement -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Gestion de Tâches - Tous droits réservés.</p>
+    </footer>
+
+    <script src="../src/core/services/planif_taches.js">
+        
+    </script>
+</body>
+</html>
