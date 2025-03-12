@@ -30,16 +30,19 @@
                     <div class="input-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" required placeholder="Entrez votre email">
+                        <small style=" color: red;" id="error-email"></small>
                     </div>
                     <div class="input-group">
                         <label for="password">Mot de passe</label>
                         <input type="password" id="password" name="password" required placeholder="Choisissez un mot de passe">
+                        <small style=" color: red;" id="error-mdp"></small>
                     </div>
                     <div class="input-group">
                         <label for="confirm-password">Confirmer le mot de passe</label>
                         <input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirmez votre mot de passe">
+                        <small id="error-mdp-confirm" style=" color: red;"></small>
                     </div>
-                    <button type="submit" class="btn-signup">S'inscrire</button>
+                    <button type="submit" class="btn-signup" id="submit-btn">S'inscrire</button>
                 </form>
                 <p class="login-link">Vous avez déjà un compte ? <a href="connexion.html">Se connecter</a></p>
             </div>
@@ -49,6 +52,6 @@
     <footer>
         <p>© 2025 Gestion de Tâches - Tous droits réservés.</p>
     </footer>
-
+    <script src="../src/core/services/register.js"></script>
 </body>
 </html>

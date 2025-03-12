@@ -29,8 +29,7 @@ function displayMessage(message, type) {
 
 function ajouterProjet(){
     fetch("../adapters/api/ajout_projet.php",{
-        method: "POST",
-        body : console.log(reponse.json())
+        method: "POST"
     }).catch(
         (error) => console.log(error)
     );
