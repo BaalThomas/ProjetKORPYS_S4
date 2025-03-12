@@ -1,5 +1,8 @@
 <?php declare(strict_types=1);
 
+//------------La prochaine chose à faire : à réfactorer !
+
+
 // Inclure la connexion à la base de données
 require_once '../database/connexion.php';
 
