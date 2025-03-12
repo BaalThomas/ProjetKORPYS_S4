@@ -2,46 +2,79 @@
 
 require_once '../database/connexion.php';
 require_once 'header.php';
-require_once 'get_user.php';
+function getUserById(int $id_user): array {
 
-// on fera le cryptage du mdp à la fin si on a le temp
-function get_random_chaine(): string {
+    global $db;  // Assurez-vous que $db est accessible à l'intérieur de la fonction
 
-    $salt = "";
-    $chars_possibles = ' !?#$%&0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
-    for($i = 0; $i < 20; $i++) {
-        $salt .= $chars_possibles[rand(0, strlen($chars_possibles)-1)];
+    $res = $db->prepare("SELECT * FROM USERS WHERE id_user = :autrement");
+
+
+    $res->bindParam(':autrement', $id_user);
+ 
+    try {
+
+        $res->execute();
+        $json["status"] = "success";
+        $json["message"] = "Sélection réussie";
+        $json["data"] = $res->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $exception) {
+
+        $json["status"] = "error";
+        $json["message"] = $exception->getMessage();
+        $json["data"] = [];
     }
-    return $salt;
+
+
+
+    return $json;  // Retourne la réponse sous forme de tableau associatif
 }
 
-$id;
-do {
-    $id = get_random_chaine();
-}while(getUserById($id)!=[]);
+function generateRandomId($length = 8){
+    $id = '';
+    for($i=0; $i < $length; $i++){
+        $id .= rand(0,9);
+    }
+    return (int)$id;
+}
 
 
-$query =
-"INSERT INTO USERS
-(`id_user`, `email`, `password_hash`)
-VALUES
-($id,'email','password_hash')";
+if (!isset($_POST['email']) || !isset($_POST['mdp'])) {
+    $json["status"] = "error";
+    $json["message"] = "Email ou mot de passe manquant.";
+    echo json_encode($json);
+    exit();
+}
 
-$res = $db->prepare($query);
 
-$res->bindParam(':email', $_POST['email']);
-$res->bindParam(':password_hash', $_POST['password_hash']);
+$mail = $_POST['email'];
+$mdp = $_POST['mdp'];
 
+do{
+    $id = generateRandomId();
+}while(getUserById($id)[0]);
+
+
+
+
+
+
+$res = $db->prepare("INSERT INTO USERS (`id_user`, `email`, `password_hash`) VALUES (:id, :email, :mdp)");
+
+
+$res->bindParam(':id', $id);
+$res->bindParam(':email', $mail);
+$res->bindParam(':mdp', $mdp);
 
 try {
+
     $res->execute();
     $json["status"] = "success";
     $json["message"] = "Insertion réussie";
+} catch (Exception $exception) {
 
-} catch(Exception $exception) {
     $json["status"] = "error";
-    $json["message"] = $exception->getMessage();
+    $json["message"] = "Erreur lors de l'insertion : " . $exception->getMessage();
 }
 
 

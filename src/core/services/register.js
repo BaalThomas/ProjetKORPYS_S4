@@ -1,4 +1,4 @@
-"use-strict"
+
 
 const email_element = document.getElementById("email");
 const mdp_element = document.getElementById("password");
@@ -41,15 +41,11 @@ document.getElementById("submit-btn").addEventListener("click", function() {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            console.log("Donnée acheminée");
         })
 
         window.alert("Votre compte a bien été créé");
         window.location.href = "connexion.html";
-
-
-
-
 
 
         console.log(email_element.value, mdp_element.value, mdp_confirm_element.value);
