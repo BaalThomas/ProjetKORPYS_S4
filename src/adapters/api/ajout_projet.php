@@ -5,13 +5,14 @@ require_once 'header.php';
 require_once 'get_projet.php';
 
 // on fera le cryptage du mdp à la fin si on a le temp
-function get_random_chaine(): string {
+function get_random_chaine(): string
+{
 
     $salt = "";
     $chars_possibles = ' !?#$%&0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
-    for($i = 0; $i < 20; $i++) {
-        $salt .= $chars_possibles[rand(0, strlen($chars_possibles)-1)];
+    for ($i = 0; $i < 20; $i++) {
+        $salt .= $chars_possibles[rand(0, strlen($chars_possibles) - 1)];
     }
     return $salt;
 }
@@ -19,11 +20,11 @@ function get_random_chaine(): string {
 $id;
 do {
     $id = get_random_chaine();
-}while(getProjetbyId($id)!=[]);
+} while (getProjetbyId($id) != []);
 
 
 $query =
-"INSERT INTO PROJET
+    "INSERT INTO PROJET
 (`id_projet`, `id_user`, `nom_projet`, `description_projet`, `status_projet`, `date_debut`, `date_max`)
 VALUES
 ($id, `id_user`, `nom_projet`, `description_projet`, `status_projet`, `date_debut`, `date_max`)";
@@ -44,7 +45,7 @@ try {
     $json["status"] = "success";
     $json["message"] = "Insertion réussie";
 
-} catch(Exception $exception) {
+} catch (Exception $exception) {
     $json["status"] = "error";
     $json["message"] = $exception->getMessage();
 }

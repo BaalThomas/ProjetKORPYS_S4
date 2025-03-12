@@ -16,6 +16,8 @@ document.getElementById('project-form').addEventListener('submit', function(even
 
     // Réinitialisation du formulaire
     document.getElementById('project-form').reset();
+
+
 });
 
 // Fonction pour afficher un message (succès ou erreur)
@@ -24,3 +26,14 @@ function displayMessage(message, type) {
     messageBox.textContent = message;
     messageBox.className = type === 'success' ? 'message-success' : 'message-error';
 }
+
+function ajouterProjet(){
+    fetch("../adapters/api/ajout_projet.php",{
+        method: "POST",
+        body : console.log(reponse.json())
+    }).catch(
+        (error) => console.log(error)
+    );
+}
+
+document.getElementById('submit-project').addEventListener("click",ajouterProjet);
