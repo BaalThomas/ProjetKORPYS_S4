@@ -3,13 +3,13 @@
 require_once '../database/connexion.php';
 
 // Vérifier si une requête POST avec l'id_user a été envoyée
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_user'])) {
-    $id_user = $_POST['id_user'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_projet'])) {
+    $id_projet = $_POST['id_projet'];
     
     // Exécuter la requête SQL pour récupérer les projets par id_user
-    $query = "SELECT * FROM PROJET WHERE id_user = :id_user";
+    $query = "DELETE FROM PROJET WHERE id_projet = :id_projet";
     $res = $db->prepare($query);
-    $res->bindParam(':id_user', $id_user, PDO::PARAM_STR);
+    $res->bindParam(':id_projet', $id_projet, PDO::PARAM_STR);
 
     try {
         $res->execute();

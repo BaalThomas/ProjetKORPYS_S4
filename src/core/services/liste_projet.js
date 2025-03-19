@@ -1,78 +1,98 @@
-// Fonction pour afficher les détails du projet
 function chargerProjets() {
-  
   console.log("Chargement des projets...");
 
-  fetch("https://devweb.iutmetz.univ-lorraine.fr/~jantzen11u/SAE%20KORPYS/ProjetKORPYS_S4/src/adapters/api/get_projet_by_user.php"), {
+  document.getElementById("project-items").innerHTML = "<p>Aucun projet</p>";
+
+  fetch("https://devweb.iutmetz.univ-lorraine.fr/~jantzen11u/SAE%20KORPYS/ProjetKORPYS_S4/src/adapters/api/get_projet_by_user.php", {
     method: "POST",
     body: new URLSearchParams({
       id_user: localStorage.getItem("user_id")
-    }).then(response => response.json())
-    .then(data => {
-      console.log("Donnée acheminée", data);
-      if (data.status === "success") {
-        console.log("Projet trouvé");
-        window.location.href = "liste_des_projets.html";
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log("Donnée acheminée", data);
+    if (data.status === "success") {
+      console.log("Projet trouvé");
+      document.getElementById("project-items").innerHTML = ""; 
 
-        
-        data.projects.forEach(project => {
-          const projectElement = document.createElement("div");
-          const titreProjetElement = document.createElement("h3");
-          const statusProjetElement = document.createElement("p");
-          const statusSpanElement = document.createElement("span");
-          const descriptionProjetElement = document.createElement("p");
-          const bouttonViewElement = document.createElement("button");
-          const bouttonDeleteElement = document.createElement("button");
+      console.log(data.data.length);
 
-          titreProjetElement.textContent = project.name;
-          statusSpanElement.textContent = project.status;
+      for(let i = 0; i < data.data.length; i++){
+        const project = data.data[i];
+        const projectElement = document.createElement("div");
+        const titreProjetElement = document.createElement("h3");
+        const statusProjetElement = document.createElement("p");
+        const statusSpanElement = document.createElement("span");
+        const descriptionProjetElement = document.createElement("p");
+        const dateProjetElement = document.createElement("p");
+        const bouttonViewElement = document.createElement("button");
+        const bouttonDeleteElement = document.createElement("button");
 
-          descriptionProjetElement.textContent = project.description;
 
-          bouttonViewElement.textContent = "Voir le Projet";
-          bouttonDeleteElement.textContent = "Supprimer le Projet";
+        statusSpanElement.classList.add("status");
+        descriptionProjetElement.classList.add("description");
+        bouttonViewElement.classList.add("btn-view");
+        bouttonDeleteElement.classList.add("btn-delete");
 
-          bouttonViewElement.onclick = function() {
-            alert("Voir le projet '" + project.name + "'");
-            // Ici vous ajouteriez la logique pour afficher les détails du projet
-            // Vous pouvez rediriger l'utilisateur vers une autre page ou afficher un modal
-          }
 
-          bouttonDeleteElement.onclick = function() {
-            deleteProject(project.name);
-          }
+        titreProjetElement.textContent = project.nom_projet;
+        statusSpanElement.textContent = project.status_projet;
+        descriptionProjetElement.textContent = project.description_projet;
+        dateProjetElement.textContent = project.date_debut + " - " + project.date_max;
 
-          statusProjetElement.textContent = "Statut: ";
+        bouttonViewElement.textContent = "Voir le Projet";
+        bouttonDeleteElement.textContent = "Supprimer le Projet";
 
-          statusProjetElement.appendChild(statusSpanElement);
-          projectElement.appendChild(titreProjetElement);
-          projectElement.appendChild(statusProjetElement);
-          projectElement.appendChild(descriptionProjetElement);
-          projectElement.appendChild(bouttonViewElement);
-          projectElement.appendChild(bouttonDeleteElement);
+        bouttonViewElement.onclick = function() {
+          alert("Voir le projet '" + project.nom_projet + "'");
+          // Ici vous ajouteriez la logique pour afficher les détails du projet
+          // Vous pouvez rediriger l'utilisateur vers une autre page ou afficher un modal
+        }
 
-          projectElement.textContent = project.name;
-          projectElement.classList.add("project-item");
-          document.getElementById("project-items").appendChild(projectElement);
-        });
+        bouttonDeleteElement.onclick = function() {
+          deleteProject(project.id_projet);
+        }
 
-      } else {
-        console.log("Projet non trouvé", data.message);
+        statusProjetElement.textContent = "Statut: ";
+
+
+        statusProjetElement.appendChild(statusSpanElement);
+        projectElement.appendChild(titreProjetElement);
+        projectElement.appendChild(statusProjetElement);
+        projectElement.appendChild(descriptionProjetElement);
+        projectElement.appendChild(dateProjetElement);
+        projectElement.appendChild(bouttonViewElement);
+        projectElement.appendChild(bouttonDeleteElement);
+
+        projectElement.classList.add("project-item");
+        document.getElementById("project-items").appendChild(projectElement);
+
       }
-    })
-    .catch(error => {
-      console.error("Erreur lors de la requête:", error);
-    })
-  }
+
+    } else {
+      console.log("Projet non trouvé", data.message);
+    }
+  })
+  .catch(error => {
+    console.error("Erreur lors de la requête:", error);
+  });
 }
 
 // Fonction pour supprimer un projet
-function deleteProject(projectName) {
+function deleteProject(idProjet) {
   if (confirm("Êtes-vous sûr de vouloir supprimer ce projet ?")) {
-    alert("Le projet '" + projectName + "' a été supprimé.");
-    // Ici vous ajouteriez la logique pour supprimer un projet dans votre base de données
-    // Vous pouvez rafraîchir la page ou mettre à jour dynamiquement la liste des projets
+    alert("Le projet a été supprimé.");
+    fetch("https://devweb.iutmetz.univ-lorraine.fr/~jantzen11u/SAE%20KORPYS/ProjetKORPYS_S4/src/adapters/api/delete_projet.php", {
+      method: "POST",
+      body: new URLSearchParams({
+        id_projet: idProjet
+      })
+    })
+
+    
   }
+  chargerProjets();
 }
 
 chargerProjets();
