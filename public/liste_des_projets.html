@@ -29,25 +29,15 @@
                 <button class="btn-add-project" onclick="window.location.href='creation_projet.html'">Créer un Nouveau Projet</button>
             </div>
 
-            <div class="project-items">
+            <div class="project-items" id="project-items">
                 <!-- Exemple de projet -->
                 <div class="project-item">
                     <h3>Nom du Projet 1</h3>
                     <p>Statut: <span class="status">En cours</span></p>
                     <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <button class="btn-view" onclick="viewProject('Projet 1')">Voir le Projet</button>
+                    <button class="btn-view" onclick="chargerProjets()">Voir le Projet</button>
                     <button class="btn-delete" onclick="deleteProject('Projet 1')">Supprimer</button>
                 </div>
-
-                <div class="project-item">
-                    <h3>Nom du Projet 2</h3>
-                    <p>Statut: <span class="status">Terminé</span></p>
-                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <button class="btn-view" onclick="viewProject('Projet 2')">Voir le Projet</button>
-                    <button class="btn-delete" onclick="deleteProject('Projet 2')">Supprimer</button>
-                </div>
-
-                <!-- Ajoutez plus de projets ici -->
             </div>
         </section>
     </main>
@@ -57,7 +47,7 @@
     </footer>
 
     <script src="../src/core/services/liste_projet.js">
-
+        chargerProjets();
     </script>
 
 </body>
