@@ -2,6 +2,9 @@
 // Inclure la connexion à la base de données
 require_once '../database/connexion.php';
 
+
+// --------------------- Faire en sorte de vérifier l'utilisateur 
+
 // Vérifier si une requête POST avec l'id_user a été envoyée
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_projet'])) {
     $id_projet = $_POST['id_projet'];

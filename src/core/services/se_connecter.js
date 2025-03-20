@@ -1,3 +1,6 @@
+import { getCookie, setCookie, deleteCookie } from "../services/cookie.js";
+
+
 const email_element = document.getElementById("email");
 const mdp_element = document.getElementById("password");
 
@@ -32,9 +35,9 @@ document.getElementById("submit-btn").addEventListener("click", function(event) 
 
             
 
-            localStorage.setItem("user_id",data.data.id_user);   //---------------Récup de l'id user dans le local storage pour l'utiliser !
+            setCookie("id_user",data.data.id_user,1);   //---------------Récup de l'id user dans le cookie pour l'utiliser !
 
-            console.log(localStorage.getItem("user_id"));
+            console.log(getCookie("id_user"));
 
             window.location.href = "liste_des_projets.html";
             // Tu peux utiliser les données ici (par exemple, pour vérifier le mot de passe)

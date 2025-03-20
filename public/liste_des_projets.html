@@ -26,7 +26,7 @@
         <section class="projects-list">
             <div class="projects-header">
                 <h2>Liste des Projets</h2>
-                <button class="btn-add-project" onclick="window.location.href='creation_projet.html'">Créer un Nouveau Projet</button>
+                <button class="btn-add-project" id="btn_creation_projet" onclick="window.location.href='creation_projet.html'">Créer un Nouveau Projet</button>
             </div>
 
             <div class="project-items" id="project-items">
@@ -41,7 +41,7 @@
         <p>© 2025 Gestion de Tâches - Tous droits réservés.</p>
     </footer>
 
-    <script src="../src/core/services/liste_projet.js">
+    <script type="module" src="../src/core/services/liste_projet.js">
         chargerProjets();
     </script>
 

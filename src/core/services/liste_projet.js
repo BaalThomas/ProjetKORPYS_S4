@@ -1,12 +1,18 @@
+import { getCookie, setCookie, deleteCookie } from "../services/cookie.js";
+
+const USERID = getCookie("id_user");
+
 function chargerProjets() {
   console.log("Chargement des projets...");
+
+  console.log(USERID);
 
   document.getElementById("project-items").innerHTML = "<p>Aucun projet</p>";
 
   fetch("https://devweb.iutmetz.univ-lorraine.fr/~jantzen11u/SAE%20KORPYS/ProjetKORPYS_S4/src/adapters/api/get_projet_by_user.php", {
     method: "POST",
     body: new URLSearchParams({
-      id_user: localStorage.getItem("user_id")
+      id_user: USERID
     })
   })
   .then(response => response.json())
@@ -29,12 +35,10 @@ function chargerProjets() {
         const bouttonViewElement = document.createElement("button");
         const bouttonDeleteElement = document.createElement("button");
 
-
         statusSpanElement.classList.add("status");
         descriptionProjetElement.classList.add("description");
         bouttonViewElement.classList.add("btn-view");
         bouttonDeleteElement.classList.add("btn-delete");
-
 
         titreProjetElement.textContent = project.nom_projet;
         statusSpanElement.textContent = project.status_projet;
@@ -56,7 +60,6 @@ function chargerProjets() {
 
         statusProjetElement.textContent = "Statut: ";
 
-
         statusProjetElement.appendChild(statusSpanElement);
         projectElement.appendChild(titreProjetElement);
         projectElement.appendChild(statusProjetElement);
@@ -67,7 +70,6 @@ function chargerProjets() {
 
         projectElement.classList.add("project-item");
         document.getElementById("project-items").appendChild(projectElement);
-
       }
 
     } else {
@@ -89,10 +91,11 @@ function deleteProject(idProjet) {
         id_projet: idProjet
       })
     })
-
-    
+    .then(() => {
+      chargerProjets();
+    });
   }
-  chargerProjets();
 }
+
 
 chargerProjets();
