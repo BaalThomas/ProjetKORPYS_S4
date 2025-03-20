@@ -1,4 +1,5 @@
 import { getCookie, setCookie, deleteCookie } from "../services/cookie.js";
+import { liste_des_taches_fn } from "../services/liste_des_taches.js";
 
 const USERID = getCookie("id_user");
 
@@ -49,9 +50,7 @@ function chargerProjets() {
         bouttonDeleteElement.textContent = "Supprimer le Projet";
 
         bouttonViewElement.onclick = function() {
-          alert("Voir le projet '" + project.nom_projet + "'");
-          // Ici vous ajouteriez la logique pour afficher les détails du projet
-          // Vous pouvez rediriger l'utilisateur vers une autre page ou afficher un modal
+          liste_des_taches_fn(project.id_projet);
         }
 
         bouttonDeleteElement.onclick = function() {
