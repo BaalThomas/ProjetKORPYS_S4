@@ -143,6 +143,9 @@ function renderWeek(weekIndex) {
 
     // Mettre à jour les boutons de navigation
     document.getElementById("week-number").innerText = `Semaine ${weekIndex + 1}`;
+
+    // Vérifier la surcharge de travail
+    checkWorkload();
 }
 
 // Fonction pour changer de semaine
@@ -474,6 +477,51 @@ export function selectTask(weekIndex, dayIndex, taskIndex) {
     };
 
     console.log("Tâche sélectionnée :", selectedTask);
+}
+
+// Fonction pour vérifier la surcharge de travail
+function checkWorkload() {
+    fetch("https://devweb.iutmetz.univ-lorraine.fr/~jantzen11u/SAE%20KORPYS/ProjetKORPYS_S4/src/adapters/api/get_hours_per_day.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+            id_projet: getCookie("id_projet")
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            const workloadData = data.data;
+
+            // Parcourir les jours et ajouter une annotation si nécessaire
+            workloadData.forEach(day => {
+                const dayElement = Array.from(document.querySelectorAll(".calendar-day")).find(el => {
+                    const dateText = new Date(day.jour).toLocaleDateString("fr-FR", {
+                        weekday: "long",
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric"
+                    });
+                    return el.querySelector("h3").innerText === dateText;
+                });
+
+                if (dayElement && day.total_heures > 8) {
+                    const annotation = document.createElement("div");
+                    annotation.classList.add("workload-warning");
+                    annotation.style.color = "red";
+                    annotation.innerText = "Attention à la surcharge de travail !";
+                    dayElement.appendChild(annotation);
+                }
+            });
+        } else {
+            console.error("Erreur lors de la récupération des heures :", data.message);
+        }
+    })
+    .catch(error => {
+        console.error("Erreur lors de la requête :", error);
+    });
 }
 
 // Attacher la fonction à l'objet global `window`
