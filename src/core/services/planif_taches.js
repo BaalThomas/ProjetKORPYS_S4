@@ -1,158 +1,150 @@
-let currentWeek = 0; // Semaine actuelle (0 = Semaine courante)
-        let selectedTask = null; // Variable pour la tâche sélectionnée
-        const projectName = "Projet Test Généré"; // Nom du projet
+import { getCookie } from "./cookie.js";
 
-        // Les tâches des semaines (exemple simplifié)
-        const tasksForWeeks = [
-            [
-                { day: "Lundi", tasks: ["Tâche 1: Description, 3h", "Tâche 2: Description, 2h"] },
-                { day: "Mardi", tasks: ["Tâche 3: Description, 1h"] },
-                { day: "Mercredi", tasks: ["Tâche 4: Description, 4h"] },
-                { day: "Jeudi", tasks: ["Tâche 5: Description, 2h"] },
-                { day: "Vendredi", tasks: ["Tâche 6: Description, 3h"] },
-                { day: "Samedi", tasks: ["Tâche 7: Description, 1h"] },
-                { day: "Dimanche", tasks: ["Tâche 8: Description, 2h"] }
-            ],
-            // Semaine suivante (exemple modifié)
-            [
-                { day: "Lundi", tasks: ["Tâche 9: Description, 2h"] },
-                { day: "Mardi", tasks: ["Tâche 10: Description, 1h"] },
-                { day: "Mercredi", tasks: ["Tâche 11: Description, 3h"] },
-                { day: "Jeudi", tasks: ["Tâche 12: Description, 1h"] },
-                { day: "Vendredi", tasks: ["Tâche 13: Description, 4h"] },
-                { day: "Samedi", tasks: ["Tâche 14: Description, 2h"] },
-                { day: "Dimanche", tasks: ["Tâche 15: Description, 3h"] }
-            ]
+function ajouterJours(date, jours) {
+    const nouvelleDate = new Date(date);
+    nouvelleDate.setDate(nouvelleDate.getDate() + jours);
+    return nouvelleDate;
+}
+
+let currentWeek = 0; // Semaine actuelle
+let selectedTask = null; // Tâche sélectionnée
+let dateDebut, dateFin;
+let tasksForWeeks = []; // Structure des semaines
+
+// Récupérer les informations du projet
+fetch("https://devweb.iutmetz.univ-lorraine.fr/~jantzen11u/SAE%20KORPYS/ProjetKORPYS_S4/src/adapters/api/get_projet_by_id.php", {
+    method: "POST",
+    body: new URLSearchParams({
+        id_projet: getCookie("id_projet")
+    })
+}).then(response => response.json())
+  .then(data => {
+      if (data.status === "success") {
+          console.log("Projet trouvé");
+          document.getElementById("project-name").innerText = data.data[0].nom_projet;
+          dateDebut = new Date(data.data[0].date_debut);
+          dateFin = new Date(data.data[0].date_max);
+
+          // Générer les semaines
+          genererSemaines();
+
+          // Charger les tâches depuis la base de données
+          chargerTaches();
+      } else {
+          console.log("Projet non trouvé", data.message);
+      }
+  });
+
+// Générer les semaines entre dateDebut et dateFin
+function genererSemaines() {
+    const startOfWeek = new Date(dateDebut);
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1); // Aller au lundi de la première semaine
+
+    const endOfWeek = new Date(dateFin);
+    endOfWeek.setDate(endOfWeek.getDate() - endOfWeek.getDay() + 7); // Aller au dimanche de la dernière semaine
+
+    let currentDate = new Date(startOfWeek);
+
+    while (currentDate <= endOfWeek) {
+        const week = [
+            { day: "Lundi", date: new Date(currentDate), tasks: [] },
+            { day: "Mardi", date: ajouterJours(currentDate, 1), tasks: [] },
+            { day: "Mercredi", date: ajouterJours(currentDate, 2), tasks: [] },
+            { day: "Jeudi", date: ajouterJours(currentDate, 3), tasks: [] },
+            { day: "Vendredi", date: ajouterJours(currentDate, 4), tasks: [] },
+            { day: "Samedi", date: ajouterJours(currentDate, 5), tasks: [] },
+            { day: "Dimanche", date: ajouterJours(currentDate, 6), tasks: [] }
         ];
+        tasksForWeeks.push(week);
+        currentDate = ajouterJours(currentDate, 7); // Passer à la semaine suivante
+    }
 
-        // Fonction pour changer de semaine
-        function changeWeek(direction) {
-            if(currentWeek+direction >= 0 && currentWeek+direction < tasksForWeeks.length){
-                currentWeek += direction;
-                renderWeek(currentWeek);
-            }
+    console.log("Semaines générées :", tasksForWeeks);
+}
 
-        }
+// Charger les tâches depuis la base de données
+function chargerTaches() {
+    fetch("https://devweb.iutmetz.univ-lorraine.fr/~jantzen11u/SAE%20KORPYS/ProjetKORPYS_S4/src/adapters/api/get_tache_by_projet.php", {
+        method: "POST",
+        body: new URLSearchParams({
+            id_projet: getCookie("id_projet")
+        })
+    }).then(response => response.json())
+      .then(data => {
+          if (data.status === "success") {
+              console.log("Tâches trouvées :", data.data);
 
-        // Fonction pour afficher les tâches de la semaine
-        function renderWeek(weekIndex) {
-            const calendarGrid = document.getElementById("calendar-grid");
-            calendarGrid.innerHTML = ""; // Efface la grille actuelle
+              // Répartir les tâches dans `tasksForWeeks`
+              data.data.forEach(tache => {
+                  const dateTache = new Date(tache.date_tache);
+                  tasksForWeeks.forEach(week => {
+                      week.forEach(day => {
+                          if (day.date.toDateString() === dateTache.toDateString()) {
+                              day.tasks.push(`${tache.nom_tache}: ${tache.description_tache}, ${tache.durée_tache}h`);
+                          }
+                      });
+                  });
+              });
 
-            // Assurer que la semaine ne dépasse pas les limites
-            if (weekIndex < 0) {
-                currentWeek = 0;
-                return;
-            }
-            if (weekIndex >= tasksForWeeks.length) {
-                currentWeek = tasksForWeeks.length - 1;
-                return;
-            }
+              console.log("Tâches organisées par semaine :", tasksForWeeks);
 
-            const weekTasks = tasksForWeeks[weekIndex];
+              // Afficher la première semaine
+              renderWeek(currentWeek);
+          } else {
+              console.log("Aucune tâche trouvée", data.message);
+          }
+      });
+}
 
-            // Crée la grille pour la semaine
-            weekTasks.forEach((day, dayIndex) => {
-                const dayElement = document.createElement("div");
-                dayElement.classList.add("calendar-day");
-                dayElement.innerHTML = `
-                    <h3>${day.day}</h3>
-                    <ul>
-                        ${day.tasks.map((task, taskIndex) => `
-                            <li id="task-${weekIndex}-${dayIndex}-${taskIndex}" 
-                                class="task-item" 
-                                onclick="selectTask(${weekIndex}, ${dayIndex}, ${taskIndex})">
-                                ${task}
-                            </li>
-                        `).join('')}
-                    </ul>
-                `;
-                calendarGrid.appendChild(dayElement);
-            });
-        }
+// Fonction pour afficher une semaine
+function renderWeek(weekIndex) {
+    const calendarGrid = document.getElementById("calendar-grid");
+    calendarGrid.innerHTML = ""; // Efface la grille actuelle
 
-        // Fonction pour sélectionner une tâche
-        function selectTask(weekIndex, dayIndex, taskIndex) {
-            // Désélectionner la tâche précédente
-            if (selectedTask !== null) {
-                const previousTaskElement = document.getElementById(selectedTask);
-                previousTaskElement.classList.remove("selected");
-            }
+    const weekTasks = tasksForWeeks[weekIndex];
 
-            // Sélectionner la nouvelle tâche
-            selectedTask = `task-${weekIndex}-${dayIndex}-${taskIndex}`;
-            const taskElement = document.getElementById(selectedTask);
-            taskElement.classList.add("selected");
-        }
+    // Crée la grille pour la semaine
+    weekTasks.forEach((day, dayIndex) => {
+        const dayElement = document.createElement("div");
+        dayElement.classList.add("calendar-day");
 
-        // Fonction pour modifier la tâche sélectionnée
-        function editSelectedTask() {
-            if (selectedTask === null) {
-                alert("Veuillez sélectionner une tâche à modifier.");
-                return;
-            }
+        const formattedDate = day.date.toLocaleDateString("fr-FR", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        });
 
-            const [weekIndex, dayIndex, taskIndex] = selectedTask.split('-').slice(1).map(Number);
-            const task = tasksForWeeks[weekIndex][dayIndex].tasks[taskIndex];
-            const newTaskDescription = prompt("Modifier la tâche:", task);
+        dayElement.innerHTML = `
+            <h3>${formattedDate}</h3>
+            <ul class="task-list">
+                ${day.tasks.map((task, taskIndex) => `
+                    <li id="task-${weekIndex}-${dayIndex}-${taskIndex}" 
+                        class="task-item" 
+                        onclick="selectTask(${weekIndex}, ${dayIndex}, ${taskIndex})">
+                        ${task}
+                    </li>
+                `).join('')}
+            </ul>
+        `;
+        calendarGrid.appendChild(dayElement);
+    });
 
-            if (newTaskDescription) {
-                tasksForWeeks[weekIndex][dayIndex].tasks[taskIndex] = newTaskDescription;
-                renderWeek(currentWeek);
-            }
-        }
+    // Mettre à jour les boutons de navigation
+    document.getElementById("week-number").innerText = `Semaine ${weekIndex + 1}`;
+}
 
-        // Fonction pour supprimer la tâche sélectionnée
-        function deleteSelectedTask() {
-            if (selectedTask === null) {
-                alert("Veuillez sélectionner une tâche à supprimer.");
-                return;
-            }
-
-            const [weekIndex, dayIndex, taskIndex] = selectedTask.split('-').slice(1).map(Number);
-
-            // Supprimer la tâche de la liste
-            tasksForWeeks[weekIndex][dayIndex].tasks.splice(taskIndex, 1);
-
-            // Réinitialiser la tâche sélectionnée
-            selectedTask = null;
-
-            // Réafficher la semaine après suppression
-            renderWeek(currentWeek);
-        }
-
-        // Fonction pour afficher/masquer le formulaire de création de tâche
-        function toggleTaskForm() {
-            const taskForm = document.getElementById("task-form");
-            taskForm.style.display = taskForm.style.display === "none" ? "block" : "none";
-        }
-
-        // Fonction pour ajouter une nouvelle tâche
-        function addTask() {
-            const day = document.getElementById("task-day").value;
-            const description = document.getElementById("task-description").value;
-            const duration = document.getElementById("task-duration").value;
-
-            if (!description || !duration) {
-                alert("Veuillez remplir tous les champs.");
-                return;
-            }
-
-            // Ajouter la tâche à la semaine actuelle
-            const task = `${description}, ${duration}h`;
-
-            const dayIndex = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"].indexOf(day);
-            tasksForWeeks[currentWeek][dayIndex].tasks.push(task);
-
-            // Réafficher la semaine avec la nouvelle tâche
-            renderWeek(currentWeek);
-
-            // Fermer le formulaire après ajout
-            toggleTaskForm();
-        }
-
-        // Initialiser la première semaine
+// Fonction pour changer de semaine
+function changeWeek(direction) {
+    if (currentWeek + direction >= 0 && currentWeek + direction < tasksForWeeks.length) {
+        currentWeek += direction;
         renderWeek(currentWeek);
-        
-        // Mettre à jour le nom du projet
-        document.getElementById('project-name').innerText = projectName;
+    }
+}
+
+// Ajouter les boutons de navigation
+document.getElementById("prev-week").addEventListener("click", () => changeWeek(-1));
+document.getElementById("next-week").addEventListener("click", () => changeWeek(1));
+
+// Initialiser la première semaine
+renderWeek(currentWeek);

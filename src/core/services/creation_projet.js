@@ -29,11 +29,22 @@ document.getElementById("submit-project").addEventListener("click", function(eve
         })
         .then(response => response.json())
         .then(data => {
-            console.log("Donnée acheminée");
+            
+
+            if (data.status === "success") {
+                console.log("Donnée acheminée");
+                window.alert("Votre projet a bien été créé");
+                window.location.href = "liste_des_projets.html";
+            }
+            else {
+                window.alert(data.message);
+                console.error("Erreur lors de l'ajout du projet", data.message);
+            }
+        }).catch(error => {
+            console.error("Erreur lors de la requête:", error);
         });
 
-        window.alert("Votre projet a bien été créé");
-        window.location.href = "liste_des_projets.html";
+        
     } else {
         event.preventDefault();
     }

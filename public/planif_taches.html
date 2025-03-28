@@ -8,16 +8,8 @@
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>Gestion de Tâches</h1>
-            <nav>
-                <ul class="navbar">
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="creation_projet.html">Créer un Projet</a></li>
-                    <li><a href="liste_des_projets.html">Liste des Projets</a></li>
-                    <li><a href="connexion.html">Se connecter</a></li>
-                </ul>
-            </nav>
+        <div class="container" id="menu">
+            
         </div>
     </header>
     
@@ -33,8 +25,9 @@
 
             <!-- Conteneur des boutons de navigation de la semaine -->
             <div class="week-navigation">
-                <button onclick="changeWeek(-1)">Semaine Précédente</button>
-                <button onclick="changeWeek(1)">Semaine Suivante</button>
+                <button id="prev-week">Semaine Précédente</button>
+                <span id="week-number"></span>
+                <button id="next-week">Semaine Suivante</button>
             </div>
 
     
@@ -80,8 +73,10 @@
         <p>© 2025 Gestion de Tâches - Tous droits réservés.</p>
     </footer>
 
-    <script src="../src/core/services/planif_taches.js">
+    <script type="module"src="../src/core/services/planif_taches.js">
         
     </script>
+        <script type="module" src="../src/core/services/functions.js">
+        </script>
 </body>
 </html>

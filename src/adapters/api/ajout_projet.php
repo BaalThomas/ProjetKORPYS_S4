@@ -59,14 +59,28 @@ $res->bindParam(':status_projet', $status_projet);
 $res->bindParam(':date_debut', $date_debut);
 $res->bindParam(':date_max', $date_max);
 
-try {
-    $res->execute();
-    $json["status"] = "success";
-    $json["message"] = "Insertion réussie";
-} catch (Exception $exception) {
+if($date_debut > $date_max) {
     $json["status"] = "error";
-    $json["message"] = "Erreur lors de l'insertion : " . $exception->getMessage();
+    $json["message"] = "La date de fin doit être supérieure à la date de début.";
+    echo json_encode($json);
+    exit();
+}else if($date_max > date('Y-m-d', strtotime($date_debut.' + 365 days'))){
+    $json["status"] = "error";
+    $json["message"] = "La date de fin ne peut pas être supérieure à 1 an après la date de début.";
+    echo json_encode($json);
+    exit();
+}else{
+    try {
+        $res->execute();
+        $json["status"] = "success";
+        $json["message"] = "Insertion réussie";
+    } catch (Exception $exception) {
+        $json["status"] = "error";
+        $json["message"] = "Erreur lors de l'insertion : " . $exception->getMessage();
+    }
 }
+
+
 
 echo json_encode($json);
 ?>

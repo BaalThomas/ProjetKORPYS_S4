@@ -6,9 +6,14 @@ const USERID = getCookie("id_user");
 function chargerProjets() {
   console.log("Chargement des projets...");
 
-  console.log(USERID);
+  // Vérifier si l'utilisateur est connecté
+  if (!USERID) {
+    console.log("Utilisateur non connecté. Chargement des projets annulé.");
+    document.getElementById("project-items").innerHTML = "<p>Veuillez vous connecter pour voir vos projets.</p>";
+    return;
+  }
 
-  document.getElementById("project-items").innerHTML = "<p>Aucun projet</p>";
+  console.log("Utilisateur connecté avec ID :", USERID);
 
   fetch("https://devweb.iutmetz.univ-lorraine.fr/~jantzen11u/SAE%20KORPYS/ProjetKORPYS_S4/src/adapters/api/get_projet_by_user.php", {
     method: "POST",
@@ -25,7 +30,7 @@ function chargerProjets() {
 
       console.log(data.data.length);
 
-      for(let i = 0; i < data.data.length; i++){
+      for (let i = 0; i < data.data.length; i++) {
         const project = data.data[i];
         const projectElement = document.createElement("div");
         const titreProjetElement = document.createElement("h3");
@@ -51,11 +56,13 @@ function chargerProjets() {
 
         bouttonViewElement.onclick = function() {
           liste_des_taches_fn(project.id_projet);
-        }
+          deleteCookie("id_projet");
+          setCookie("id_projet", project.id_projet, 1);
+        };
 
         bouttonDeleteElement.onclick = function() {
           deleteProject(project.id_projet);
-        }
+        };
 
         statusProjetElement.textContent = "Statut: ";
 
@@ -73,10 +80,12 @@ function chargerProjets() {
 
     } else {
       console.log("Projet non trouvé", data.message);
+      document.getElementById("project-items").innerHTML = "<p>Aucun projet trouvé.</p>";
     }
   })
   .catch(error => {
     console.error("Erreur lors de la requête:", error);
+    document.getElementById("project-items").innerHTML = "<p>Erreur lors du chargement des projets.</p>";
   });
 }
 
@@ -96,5 +105,5 @@ function deleteProject(idProjet) {
   }
 }
 
-
+// Charger les projets uniquement si un utilisateur est connecté
 chargerProjets();
