@@ -269,18 +269,36 @@ h2 {
 
 /* Tâches individuelles */
 .task-item {
-    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
     padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .task-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.task-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.task-duration {
+    font-size: 14px;
+    color: #007BFF;
+    font-weight: bold;
 }
 
 /* Tâche sélectionnée */
@@ -313,6 +331,14 @@ h2 {
 .selected {
     border: 2px solid #28a745;
     background-color: #e0f7e0;
+}
+
+/* Style pour la tâche sélectionnée */
+.selected-task {
+    border: 2px solid #007BFF;
+    background-color: #E6F0FF;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Footer */

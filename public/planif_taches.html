@@ -33,33 +33,49 @@
     
             <!-- Boutons pour modifier ou supprimer la tâche sélectionnée -->
             <div class="edit-task">
-                <button onclick="toggleTaskForm()" class="css_ajoutClass">Ajouter une Nouvelle Tâche</button>
-                <button onclick="editSelectedTask()" class= "css_modifClass">Modifier la Tâche</button>
-                <button onclick="deleteSelectedTask()" class = "css_supprClass">Supprimer la Tâche</button>
+                <button id="ajouterTache" class="css_ajoutClass">Ajouter une Nouvelle Tâche</button>
+                <button id="modifierTache" class= "css_modifClass">Modifier la Tâche</button>
+                <button id="supprimerTache" class = "css_supprClass">Supprimer la Tâche</button>
             </div>
 
             <!-- Formulaire pour ajouter une tâche (caché par défaut) -->
             <div id="task-form" class="task-form" style="display: none;">
                 <h3>Ajouter une nouvelle tâche</h3>
-                <label for="task-day">Jour:</label>
-                <select id="task-day">
-                    <option value="Lundi">Lundi</option>
-                    <option value="Mardi">Mardi</option>
-                    <option value="Mercredi">Mercredi</option>
-                    <option value="Jeudi">Jeudi</option>
-                    <option value="Vendredi">Vendredi</option>
-                    <option value="Samedi">Samedi</option>
-                    <option value="Dimanche">Dimanche</option>
-                </select>
 
-                <label for="task-description">Description:</label>
+                <label for="task-name">Nom de la tâche :</label>
+                <input type="text" id="task-name" placeholder="Nom de la tâche" />
+
+                <label for="task-date">Date de la tâche :</label>
+                <input type="date" id="task-date" />
+
+                <label for="task-description">Description :</label>
                 <input type="text" id="task-description" placeholder="Description de la tâche" />
 
-                <label for="task-duration">Durée (en heures):</label>
+                <label for="task-duration">Durée (en heures) :</label>
                 <input type="number" id="task-duration" placeholder="Durée estimée" min="1" />
 
-                <button onclick="addTask()">Ajouter</button>
-                <button onclick="toggleTaskForm()">Annuler</button>
+                <button id="confirmerAjoutTache">Ajouter</button>
+                <button id="annulerAjoutTache">Annuler</button>
+            </div>
+
+            <!-- Formulaire pour modifier une tâche (caché par défaut) -->
+            <div id="edit-task-form" class="task-form" style="display: none;">
+                <h3>Modifier une tâche</h3>
+
+                <label for="edit-task-name">Nom de la tâche :</label>
+                <input type="text" id="edit-task-name" placeholder="Nom de la tâche" />
+
+                <label for="edit-task-date">Date de la tâche :</label>
+                <input type="date" id="edit-task-date" />
+
+                <label for="edit-task-description">Description :</label>
+                <input type="text" id="edit-task-description" placeholder="Description de la tâche" />
+
+                <label for="edit-task-duration">Durée (en heures) :</label>
+                <input type="number" id="edit-task-duration" placeholder="Durée estimée" min="1" />
+
+                <button id="confirmerModificationTache">Modifier</button>
+                <button id="annulerModificationTache">Annuler</button>
             </div>
 
             <!-- Grille de calendrier -->
@@ -73,7 +89,7 @@
         <p>© 2025 Gestion de Tâches - Tous droits réservés.</p>
     </footer>
 
-    <script type="module"src="../src/core/services/planif_taches.js">
+    <script type="module" src="../src/core/services/planif_taches.js">
         
     </script>
         <script type="module" src="../src/core/services/functions.js">
