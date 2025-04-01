@@ -329,11 +329,13 @@ function editTask() {
 
     console.log("Tâche sélectionnée :", selectedTask); // Debug
 
-    // Pré-remplir les champs du formulaire avec les informations de la tâche sélectionnée
-    document.getElementById("edit-task-name").value = selectedTask.name;
-    document.getElementById("edit-task-date").value = new Date(selectedTask.date).toISOString().split("T")[0]; // Format YYYY-MM-DD
-    document.getElementById("edit-task-description").value = selectedTask.description;
-    document.getElementById("edit-task-duration").value = selectedTask.duration;
+   // Pré-remplir les champs du formulaire avec les informations de la tâche sélectionnée
+const localDate = new Date(selectedTask.date);
+localDate.setMinutes(localDate.getMinutes() - localDate.getTimezoneOffset()); // Ajuster pour le fuseau horaire local
+document.getElementById("edit-task-name").value = selectedTask.name;
+document.getElementById("edit-task-date").value = localDate.toISOString().split("T")[0]; // Format YYYY-MM-DD
+document.getElementById("edit-task-description").value = selectedTask.description;
+document.getElementById("edit-task-duration").value = selectedTask.duration;
 
     // Ajouter un gestionnaire pour confirmer la modification
     document.getElementById("confirmerModificationTache").onclick = function () {

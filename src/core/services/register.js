@@ -28,6 +28,14 @@ document.getElementById("submit-btn").addEventListener("click", function() {
         error_mdp_element.textContent = "";
     }
 
+    if(!email_element.value.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)){
+        error_email_element.textContent = "L'email n'est pas valide !";
+        bon = false
+    }
+    else{
+        error_email_element.textContent = "";
+    }
+
 
     if(bon){
         
